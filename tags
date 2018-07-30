@@ -1,0 +1,16 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+X	backtracking.py	/^X = np.c_[np.ones(len(X)), X]$/;"	v
+builder	backtracking.py	/^builder = tengp.individual.IndividualBuilder(params)$/;"	v
+funset	backtracking.py	/^funset = tengp.FunctionSet()$/;"	v
+individual	backtracking.py	/^individual = builder.create()$/;"	v
+output	backtracking.py	/^output = individual.transform(X)$/;"	v
+params	backtracking.py	/^params = tengp.Parameters(2, 1, 1, 10, funset)$/;"	v
+pdivide	backtracking.py	/^def pdivide(x, y):$/;"	f
+plog	backtracking.py	/^def plog(x):$/;"	f
+pow2	backtracking.py	/^def pow2(x):$/;"	f
+pow3	backtracking.py	/^def pow3(x):$/;"	f
