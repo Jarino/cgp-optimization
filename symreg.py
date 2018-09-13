@@ -11,6 +11,9 @@ def target_poly(x, n_degrees):
 def target_nguyen7(x):
     return np.log(x+1) + np.log(np.power(x, 2)+1)
 
+def target_nguyen10(x):
+    return 2 * np.sin(x[:,0]) * np.cos(x[:, 1])
+
 
 def target_vladislasleva4(x):
     res = np.atleast_2d(np.power(x[:, 0] - 3, 2) + np.power(x[:, 1] - 3, 2) + np.power(x[:, 2] - 3, 2) +
@@ -174,6 +177,11 @@ def get_benchmark_poly(rand, n_degrees):
 def get_benchmark_nguyen7(rand, n_degrees):
     train_x = np.array([(rand.random() * 2) for i in range(20)], ndmin=2).transpose()
     train_y = target_nguyen7(train_x)
+    return train_x, train_y, train_x, train_y
+
+def get_benchmark_nguyen10(rand, n_degrees):
+    train_x = np.array([(rand.random() * 2 - 1, rand.random() * 2 - 1) for i in range(100)])
+    train_y = target_nguyen10(train_x)
     return train_x, train_y, train_x, train_y
 
 
