@@ -12,6 +12,7 @@ get_benchmark_constant	symreg.py	/^def get_benchmark_constant(rand, n_degrees):$
 get_benchmark_keijzer	symreg.py	/^def get_benchmark_keijzer(rand, n_degrees):$/;"	f
 get_benchmark_korns	symreg.py	/^def get_benchmark_korns(rand, n_degrees):$/;"	f
 get_benchmark_multivar	symreg.py	/^def get_benchmark_multivar(rand, n_degrees):$/;"	f
+get_benchmark_nguyen10	symreg.py	/^def get_benchmark_nguyen10(rand, n_degrees):$/;"	f
 get_benchmark_nguyen7	symreg.py	/^def get_benchmark_nguyen7(rand, n_degrees):$/;"	f
 get_benchmark_pagie1	symreg.py	/^def get_benchmark_pagie1(rand, n_degrees):$/;"	f
 get_benchmark_poly	symreg.py	/^def get_benchmark_poly(rand, n_degrees):$/;"	f
@@ -73,6 +74,7 @@ target_korns6	symreg.py	/^def target_korns6(x):$/;"	f
 target_korns7	symreg.py	/^def target_korns7(x):$/;"	f
 target_korns8	symreg.py	/^def target_korns8(x):$/;"	f
 target_korns9	symreg.py	/^def target_korns9(x):$/;"	f
+target_nguyen10	symreg.py	/^def target_nguyen10(x):$/;"	f
 target_nguyen7	symreg.py	/^def target_nguyen7(x):$/;"	f
 target_pagie1	symreg.py	/^def target_pagie1(x):$/;"	f
 target_poly	symreg.py	/^def target_poly(x, n_degrees):$/;"	f
