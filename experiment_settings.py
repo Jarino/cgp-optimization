@@ -40,6 +40,9 @@ def pexp(x, y):
 def pow_minus1(x, y):
     return x**(-1)
 
+def constant(x, y):
+    return x
+
 nguyen7_funset = tengp.FunctionSet()
 nguyen7_funset.add(np.add, 2)
 nguyen7_funset.add(np.subtract, 2)
@@ -48,6 +51,18 @@ nguyen7_funset.add(pdivide, 2)
 nguyen7_funset.add(plog, 2)
 nguyen7_funset.add(psin, 2)
 nguyen7_funset.add(pcos, 2)
+
+
+cnguyen7_funset = tengp.FunctionSet()
+cnguyen7_funset.add(constant, 2)
+cnguyen7_funset.add(np.add, 2)
+cnguyen7_funset.add(np.subtract, 2)
+cnguyen7_funset.add(np.multiply, 2)
+cnguyen7_funset.add(pdivide, 2)
+cnguyen7_funset.add(plog, 2)
+cnguyen7_funset.add(psin, 2)
+cnguyen7_funset.add(pcos, 2)
+
 
 #     function set: +, -, *, /, sin, cos, tan, tanh, sqrt, exp, log, **2, **3
 korns12_funset = tengp.FunctionSet()
@@ -64,6 +79,24 @@ korns12_funset.add(pexp, 2)
 korns12_funset.add(plog, 2)
 korns12_funset.add(pow2, 2)
 korns12_funset.add(pow3, 2)
+
+ckorns12_funset = tengp.FunctionSet()
+ckorns12_funset.add(constant, 2)
+ckorns12_funset.add(np.add, 2)
+ckorns12_funset.add(np.subtract, 2)
+ckorns12_funset.add(np.multiply, 2)
+ckorns12_funset.add(pdivide, 2)
+ckorns12_funset.add(psin, 2)
+ckorns12_funset.add(pcos, 2)
+ckorns12_funset.add(ptan, 2)
+ckorns12_funset.add(ptanh, 2)
+ckorns12_funset.add(psqrt, 2)
+ckorns12_funset.add(pexp, 2)
+ckorns12_funset.add(plog, 2)
+ckorns12_funset.add(pow2, 2)
+ckorns12_funset.add(pow3, 2)
+
+
 
 vlad_funset = tengp.FunctionSet()
 vlad_funset.add(np.add, 2)
