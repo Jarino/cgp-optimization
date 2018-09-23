@@ -43,6 +43,9 @@ def pow_minus1(x, y):
 def constant(x, y):
     return x
 
+def constant1(x, y):
+    return np.tile(1, x.shape)
+
 nguyen7_funset = tengp.FunctionSet()
 nguyen7_funset.add(np.add, 2)
 nguyen7_funset.add(np.subtract, 2)
@@ -51,6 +54,17 @@ nguyen7_funset.add(pdivide, 2)
 nguyen7_funset.add(plog, 2)
 nguyen7_funset.add(psin, 2)
 nguyen7_funset.add(pcos, 2)
+
+
+c1nguyen7_funset = tengp.FunctionSet()
+c1nguyen7_funset.add(np.add, 2)
+c1nguyen7_funset.add(np.subtract, 2)
+c1nguyen7_funset.add(np.multiply, 2)
+c1nguyen7_funset.add(pdivide, 2)
+c1nguyen7_funset.add(plog, 2)
+c1nguyen7_funset.add(psin, 2)
+c1nguyen7_funset.add(pcos, 2)
+c1nguyen7_funset.add(constant1, 2)
 
 
 cnguyen7_funset = tengp.FunctionSet()
