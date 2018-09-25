@@ -143,20 +143,3 @@ keijzer_funset.add(pcos, 2)
 keijzer_funset.add(psqrt, 2)
 keijzer_funset.add(plog, 2)
 keijzer_funset.add(pow_minus1, 2)
-
-params1d = tengp.Parameters(2, 1, 1, 50, nguyen7_funset, real_valued=True)
-params2d = tengp.Parameters(3, 1, 1, 50, nguyen7_funset, real_valued=True)
-paramsKorns = tengp.Parameters(6, 1, 1, 50, korns12_funset, real_valued=True)
-paramsVlad = tengp.Parameters(6, 1, 1, 50, vlad_funset, real_valued=True)
-paramsPagie = tengp.Parameters(3, 1, 1, 50, pagie_funset, real_valued=True)
-paramsKeijzer = tengp.Parameters(2, 1, 1, 50, keijzer_funset, real_valued=True)
-
-functions = [
-    ('nguyenf4', params1d, [-1, 1, 20]),
-    ('nguyenf7', params1d, [0, 2, 20]),
-    ('nguyenf10', params2d, [-1, 1, 100]),
-    ('pagie1', paramsPagie, [-5, 5, 25]),
-    ('keijzer6', paramsKeijzer, [1, 50, 50]),
-    ('korns12', paramsKorns, [-50, 50, 10000]),
-    ('vladislasleva4', paramsVlad, [-0.05, 6.05, 1024])
-]
