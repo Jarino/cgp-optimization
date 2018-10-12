@@ -16,8 +16,8 @@ def psin(x, y):
 def pcos(x, y):
     return np.cos(x)
 
-def pow(x, y):
-    return np.power(x, y)
+def ppower(x, y):
+    return np.power(x, y, out=np.copy(x), where=x>0|np.equal(np.mod(y, 1), 0), casting='unsafe')
 
 def pow2(x, y):
     return x**2
@@ -38,13 +38,8 @@ def pexp(x, y):
     return np.exp(x)
 
 def pow_minus1(x, y):
-    return x**(-1)
-
-def constant(x, y):
-    return x
-
-def constant1(x, y):
-    return np.tile(1, x.shape)
+    x = np.array(x, dtype=float)
+    return ppower(x, -1, out=np.copy(x), where=x!=0)
 
 nguyen7_funset = tengp.FunctionSet()
 nguyen7_funset.add(np.add, 2)
@@ -56,29 +51,6 @@ nguyen7_funset.add(psin, 2)
 nguyen7_funset.add(pcos, 2)
 
 
-c1nguyen7_funset = tengp.FunctionSet()
-c1nguyen7_funset.add(np.add, 2)
-c1nguyen7_funset.add(np.subtract, 2)
-c1nguyen7_funset.add(np.multiply, 2)
-c1nguyen7_funset.add(pdivide, 2)
-c1nguyen7_funset.add(plog, 2)
-c1nguyen7_funset.add(psin, 2)
-c1nguyen7_funset.add(pcos, 2)
-c1nguyen7_funset.add(constant1, 2)
-
-
-cnguyen7_funset = tengp.FunctionSet()
-cnguyen7_funset.add(constant, 2)
-cnguyen7_funset.add(np.add, 2)
-cnguyen7_funset.add(np.subtract, 2)
-cnguyen7_funset.add(np.multiply, 2)
-cnguyen7_funset.add(pdivide, 2)
-cnguyen7_funset.add(plog, 2)
-cnguyen7_funset.add(psin, 2)
-cnguyen7_funset.add(pcos, 2)
-
-
-#     function set: +, -, *, /, sin, cos, tan, tanh, sqrt, exp, log, **2, **3
 korns12_funset = tengp.FunctionSet()
 korns12_funset.add(np.add, 2)
 korns12_funset.add(np.subtract, 2)
@@ -94,30 +66,12 @@ korns12_funset.add(plog, 2)
 korns12_funset.add(pow2, 2)
 korns12_funset.add(pow3, 2)
 
-ckorns12_funset = tengp.FunctionSet()
-ckorns12_funset.add(constant, 2)
-ckorns12_funset.add(np.add, 2)
-ckorns12_funset.add(np.subtract, 2)
-ckorns12_funset.add(np.multiply, 2)
-ckorns12_funset.add(pdivide, 2)
-ckorns12_funset.add(psin, 2)
-ckorns12_funset.add(pcos, 2)
-ckorns12_funset.add(ptan, 2)
-ckorns12_funset.add(ptanh, 2)
-ckorns12_funset.add(psqrt, 2)
-ckorns12_funset.add(pexp, 2)
-ckorns12_funset.add(plog, 2)
-ckorns12_funset.add(pow2, 2)
-ckorns12_funset.add(pow3, 2)
-
-
-
 vlad_funset = tengp.FunctionSet()
 vlad_funset.add(np.add, 2)
 vlad_funset.add(np.subtract, 2)
 vlad_funset.add(np.multiply, 2)
 vlad_funset.add(pdivide, 2)
-vlad_funset.add(np.power, 2)
+vlad_funset.add(ppower, 2)
 vlad_funset.add(psin, 2)
 vlad_funset.add(pcos, 2)
 vlad_funset.add(psqrt, 2)
@@ -130,7 +84,7 @@ pagie_funset.add(np.add, 2)
 pagie_funset.add(np.subtract, 2)
 pagie_funset.add(np.multiply, 2)
 pagie_funset.add(pdivide, 2)
-pagie_funset.add(np.power, 2)
+pagie_funset.add(ppower, 2)
 pagie_funset.add(psqrt, 2)
 pagie_funset.add(plog, 2)
 pagie_funset.add(pow_minus1, 2)
