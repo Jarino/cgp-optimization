@@ -32,7 +32,7 @@ def ptanh(x, y):
     return np.tanh(x)
 
 def psqrt(x, y):
-    return  np.sqrt(x)
+    return  np.sqrt(x, out=np.copy(x), where=x>0)
 
 def pexp(x, y):
     return np.exp(x)
