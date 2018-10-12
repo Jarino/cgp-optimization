@@ -2,7 +2,6 @@ import numpy as np
 
 import tengp
 
-from gpbenchmarks import get_data
 
 def pdivide(x, y):
     return np.divide(x, y, out=np.copy(x), where=y!=0)
