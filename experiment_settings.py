@@ -5,7 +5,7 @@ import tengp
 from gpbenchmarks import get_data
 
 def pdivide(x, y):
-    return np.divide(x, y, out=np.copy(x), where=x!=0)
+    return np.divide(x, y, out=np.copy(x), where=y!=0)
 
 def plog(x, y):
     return np.log(x, out=np.copy(x), where=x>0)

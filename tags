@@ -6,7 +6,11 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 X	backtracking.py	/^X = np.c_[np.ones(len(X)), X]$/;"	v
 builder	backtracking.py	/^builder = tengp.individual.IndividualBuilder(params)$/;"	v
-functions	experiment_settings.py	/^functions = [$/;"	v
+c1nguyen7_funset	experiment_settings.py	/^c1nguyen7_funset = tengp.FunctionSet()$/;"	v
+ckorns12_funset	experiment_settings.py	/^ckorns12_funset = tengp.FunctionSet()$/;"	v
+cnguyen7_funset	experiment_settings.py	/^cnguyen7_funset = tengp.FunctionSet()$/;"	v
+constant	experiment_settings.py	/^def constant(x, y):$/;"	f
+constant1	experiment_settings.py	/^def constant1(x, y):$/;"	f
 funset	backtracking.py	/^funset = tengp.FunctionSet()$/;"	v
 get_benchmark_constant	symreg.py	/^def get_benchmark_constant(rand, n_degrees):$/;"	f
 get_benchmark_keijzer	symreg.py	/^def get_benchmark_keijzer(rand, n_degrees):$/;"	f
@@ -24,12 +28,6 @@ nguyen7_funset	experiment_settings.py	/^nguyen7_funset = tengp.FunctionSet()$/;"
 output	backtracking.py	/^output = individual.transform(X)$/;"	v
 pagie_funset	experiment_settings.py	/^pagie_funset = tengp.FunctionSet()$/;"	v
 params	backtracking.py	/^params = tengp.Parameters(2, 1, 1, 10, funset)$/;"	v
-params1d	experiment_settings.py	/^params1d = tengp.Parameters(2, 1, 1, 50, nguyen7_funset, real_valued=True)$/;"	v
-params2d	experiment_settings.py	/^params2d = tengp.Parameters(3, 1, 1, 50, nguyen7_funset, real_valued=True)$/;"	v
-paramsKeijzer	experiment_settings.py	/^paramsKeijzer = tengp.Parameters(2, 1, 1, 50, keijzer_funset, real_valued=True)$/;"	v
-paramsKorns	experiment_settings.py	/^paramsKorns = tengp.Parameters(6, 1, 1, 50, korns12_funset, real_valued=True)$/;"	v
-paramsPagie	experiment_settings.py	/^paramsPagie = tengp.Parameters(3, 1, 1, 50, pagie_funset, real_valued=True)$/;"	v
-paramsVlad	experiment_settings.py	/^paramsVlad = tengp.Parameters(6, 1, 1, 50, vlad_funset, real_valued=True)$/;"	v
 pcos	experiment_settings.py	/^def pcos(x, y):$/;"	f
 pdivide	backtracking.py	/^def pdivide(x, y):$/;"	f
 pdivide	experiment_settings.py	/^def pdivide(x, y):$/;"	f
