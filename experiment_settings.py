@@ -38,7 +38,7 @@ def pexp(x, y):
 
 def pow_minus1(x, y):
     x = np.array(x, dtype=float)
-    return ppower(x, -1, out=np.copy(x), where=x!=0)
+    return np.power(x, -1, out=np.copy(x), where=x!=0)
 
 nguyen7_funset = tengp.FunctionSet()
 nguyen7_funset.add(np.add, 2)
