@@ -1,58 +1,70 @@
 import random
+from configparser import ConfigParser
 
 import pygmo as pg
 from GPyOpt.methods import BayesianOptimization
 import numpy as np
 from numpy.random import seed
-seed(42)
 
 from configmock import ConfigMock
-from experiment_settings import keijzer_funset
-import symreg
+from experiment_settings import keijzer_fixed_funset
 from ccgp_pso import run_benchmark
 
-x_train, y_train, x_test, y_test = symreg.get_benchmark_keijzer(random, 6)
-x_train = np.c_[np.ones(len(x_train)), x_train]
-x_test = np.c_[np.ones(len(x_test)), x_test]
+from tengp_eval.utils import get_keijzer_data
 
-cp = ConfigMock()
-cp.add('n_nodes', 50)
-cp.add('n_generations', 50)
-cp.add('population_size', 25)
+def cost_function_fc(cp, funset, x, y):
+    def cost_function(X):
+        cp.add('max_back', X[0][0])
+        cp.add('omega', X[0][1])
+        cp.add('eta1', X[0][2])
+        cp.add('eta2', X[0][3])
+        pg.set_global_rng_seed(seed = 42)
+        log = run_benchmark(cp, x, y, funset)
+        return min(log)
+        #return np.sum(np.diff(log) != 0)
+    return cost_function
 
-def func(x):
-    print(x)
-    cp.add('max_back', x[0][0])
-    cp.add('omega', x[0][1])
-    cp.add('eta1', x[0][2])
-    cp.add('eta2', x[0][3])
-    pg.set_global_rng_seed(seed = 42)
-    log = run_benchmark(cp, x_train, y_train, keijzer_funset)
-    return min(log)
 
-domain = [
-    {'name': 'max_back', 'type': 'discrete', 'domain': (1, 5, 10, 15, 20, 25, 30)},
-    {'name': 'omega', 'type': 'continuous', 'domain': (0.01, 1)},
-    {'name': 'eta1', 'type': 'continuous', 'domain': (0.01, 4)},
-    {'name': 'eta2', 'type': 'continuous', 'domain': (0.01, 4)},
-]
+for bench_id in range(10,16):
+    print(f'creating hyperparameters for benchmark keijzer{bench_id}')
 
-random.seed(42)
-myBopt = BayesianOptimization(f=func, domain=domain)
-myBopt.run_optimization(max_iter=10)
+    x_train, y_train, x_test, y_test = get_keijzer_data(random, bench_id)
 
-print(myBopt.X)
-print(myBopt.Y)
-print('best', myBopt.X[np.argmin(myBopt.Y)], np.min(myBopt.Y))
+    cp = ConfigMock()
+    cp.add('n_generations', 10)
+    cp.add('population_size', 25)
+    cp.add('n_nodes', 50)
 
-print('running on the test set')
+    domain = [
+        {'name': 'max_back', 'type': 'discrete', 'domain': (1, 5, 10, 15, 20, 25, 30)},
+        {'name': 'omega', 'type': 'continuous', 'domain': (0.01, 1)},
+        {'name': 'eta1', 'type': 'continuous', 'domain': (0.01, 4)},
+        {'name': 'eta2', 'type': 'continuous', 'domain': (0.01, 4)},
+    ]
 
-cp.add('max_back', myBopt.X[0][0])
-cp.add('omega', myBopt.X[0][1])
-cp.add('eta1', myBopt.X[0][2])
-cp.add('eta2', myBopt.X[0][3])
+    seed(42)
+    random.seed(42)
+    myBopt = BayesianOptimization(
+            f=cost_function_fc(cp, keijzer_fixed_funset, x_train, y_train),
+            domain=domain,
+            acquisition_jitter=0.1)
 
-run_benchmark(cp, x_test, y_test, keijzer_funset)
+    myBopt.run_optimization(max_iter=5)
+
+    best = myBopt.X[np.argmin(myBopt.Y)]
+
+    cp.add('max_back', best[0])
+    cp.add('omega', best[1])
+    cp.add('eta1', best[2])
+    cp.add('eta2', best[3])
+    cp.add('n_generations', 2000)
+
+    real_cp = ConfigParser()
+
+    real_cp['DEFAULT'] = cp.parameters
+
+    with open(f'hyperparams-keijzer{bench_id}-pso.ini', 'w') as f:
+        real_cp.write(f)
 
 
 

@@ -96,3 +96,16 @@ keijzer_funset.add(pcos, 2)
 keijzer_funset.add(psqrt, 2)
 keijzer_funset.add(plog, 2)
 keijzer_funset.add(pow_minus1, 2)
+
+def fraction(x, _):
+    return np.divide(1, x, out=np.ones(len(x)), where=x!=0)
+
+def negative(x, _):
+    return -x
+
+keijzer_fixed_funset = tengp.FunctionSet()
+keijzer_fixed_funset.add(np.add, 2)
+keijzer_fixed_funset.add(np.multiply, 2)
+keijzer_fixed_funset.add(fraction, 2)
+keijzer_fixed_funset.add(negative, 2)
+keijzer_fixed_funset.add(psqrt, 2)

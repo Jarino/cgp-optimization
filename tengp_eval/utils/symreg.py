@@ -108,8 +108,7 @@ def target_keijzer1(x):
 
 
 def target_keijzer2(x):
-    res = np.atleast_2d(np.power(x[:, 0], 3)*np.exp(-x[:, 0])*np.cos(x[:, 0])*np.sin(x[:, 0])*(np.sin(np.sin(x[:, 0]))*
-                                                                                               np.cos(x[:, 0]) - 1))
+    res = np.atleast_2d(np.power(x, 3)*np.exp(-x)*np.cos(x)*np.sin(x)*(np.sin(np.sin(x))*np.cos(x) - 1))
     return res
 
 
@@ -124,17 +123,17 @@ def target_keijzer4(x):
 
 
 def target_keijzer5(x):
-    res = np.atleast_2d(np.log(x[:, 0]))
+    res = np.atleast_2d(np.log(x))
     return res
 
 
 def target_keijzer6(x):
-    res = np.atleast_2d(np.sqrt(x[:, 0]))
+    res = np.atleast_2d(np.sqrt(x))
     return res
 
 
 def target_keijzer7(x):
-    res = np.atleast_2d(np.arcsinh(x[:, 0]))
+    res = np.atleast_2d(np.arcsinh(x))
     return res
 
 
@@ -144,7 +143,7 @@ def target_keijzer8(x):
 
 
 def target_keijzer9(x):
-    res = np.atleast_2d(x[:, 0]*x[:, 1] + sin((x[:, 0]-1)*(x[:, 1]-1)))
+    res = np.atleast_2d(x[:, 0]*x[:, 1] + np.sin((x[:, 0]-1)*(x[:, 1]-1)))
     return res
 
 
@@ -246,37 +245,43 @@ def get_benchmark_keijzer(rand, n_degrees):
         train_x = np.array([[rand.random(),
                              rand.random()] for i in range(100)], ndmin=2)
         train_y = target_keijzer8(train_x).transpose()
-        test_x = np.meshgrid([np.arange(0, 1, 0.01), np.arange(0, 1, 0.01)])
+        xv, yv = np.meshgrid(np.arange(0, 1, 0.01), np.arange(0, 1, 0.01))
+        test_x = np.array([xv.flatten(), yv.flatten()]).T
         test_y = target_keijzer8(test_x).transpose()
     elif n_degrees == 11:
         train_x = np.array([[rand.random()*6 - 3,
                              rand.random()*6 - 3] for i in range(20)], ndmin=2)
         train_y = target_keijzer9(train_x).transpose()
-        test_x = np.meshgrid([np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01)])
+        xv, yv = np.meshgrid(np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01))
+        test_x = np.array([xv.flatten(), yv.flatten()]).T
         test_y = target_keijzer9(test_x).transpose()
     elif n_degrees == 12:
         train_x = np.array([[rand.random()*6 - 3,
                              rand.random()*6 - 3] for i in range(20)], ndmin=2)
         train_y = target_keijzer10(train_x).transpose()
-        test_x = np.meshgrid([np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01)])
+        xv, yv = np.meshgrid(np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01))
+        test_x = np.array([xv.flatten(), yv.flatten()]).T
         test_y = target_keijzer10(test_x).transpose()
     elif n_degrees == 13:
         train_x = np.array([[rand.random()*6 - 3,
                              rand.random()*6 - 3] for i in range(20)], ndmin=2)
         train_y = target_keijzer11(train_x).transpose()
-        test_x = np.meshgrid([np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01)])
+        xv, yv = np.meshgrid(np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01))
+        test_x = np.array([xv.flatten(), yv.flatten()]).T
         test_y = target_keijzer11(test_x).transpose()
     elif n_degrees == 14:
         train_x = np.array([[rand.random()*6 - 3,
                              rand.random()*6 - 3] for i in range(20)], ndmin=2)
         train_y = target_keijzer12(train_x).transpose()
-        test_x = np.meshgrid([np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01)])
+        xv, yv = np.meshgrid(np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01))
+        test_x = np.array([xv.flatten(), yv.flatten()]).T
         test_y = target_keijzer12(test_x).transpose()
     elif n_degrees == 15:
         train_x = np.array([[rand.random()*6 - 3,
                              rand.random()*6 - 3] for i in range(20)], ndmin=2)
         train_y = target_keijzer13(train_x).transpose()
-        test_x = np.meshgrid([np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01)])
+        xv, yv = np.meshgrid(np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01))
+        test_x = np.array([xv.flatten(), yv.flatten()]).T
         test_y = target_keijzer13(test_x).transpose()
     else:
         print('Degree %d not defined for this problem.' %n_degrees)
