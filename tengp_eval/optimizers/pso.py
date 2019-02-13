@@ -43,22 +43,66 @@ def define_cgp_system(n_nodes, n_inputs, n_outputs, funset, max_back):
 
 def run_benchmark(cp, x_train, y_train, funset):
     ib, params, bounds = define_cgp_system(
-            cp.getint('DEFAULT', 'n_nodes'),
+            cp.getint('CGPPARAMS', 'n_nodes'),
             x_train.shape[1] if len(x_train.shape) > 1 else 1,
             y_train.shape[1] if len(y_train.shape) > 1 else 1,
             funset,
-            cp.getint('DEFAULT', 'max_back'))
+            cp.getint('CGPPARAMS', 'max_back'))
 
     prob = pg.problem(cost_function(x_train, y_train, params, bounds))
     algo = pg.algorithm(pg.pso(
-        gen=cp.getint('DEFAULT', 'n_generations'),
-        omega=cp.getfloat('DEFAULT', 'omega'),
-        eta1=cp.getfloat('DEFAULT', 'eta1'),
-        eta2=cp.getfloat('DEFAULT', 'eta2')
-        ))
-    algo.set_verbosity(1)
+        gen=cp.getint('DEFAULT', 'gens'),
+        omega=cp.getfloat('OPTIMPARAMS', 'omega'),
+        eta1=cp.getfloat('OPTIMPARAMS', 'eta1'),
+        eta2=cp.getfloat('OPTIMPARAMS', 'eta2')))
+    algo.set_verbosity(100)
     pop = pg.population(prob, cp.getint('DEFAULT', 'population_size'))
     pop = algo.evolve(pop)
     uda = algo.extract(pg.pso)
 
     return [x[2] for x in uda.get_log()]
+
+
+if __name__ == '__main__':
+    import sys
+    import random
+    import pickle
+    import os
+    from time import time
+    from tengp_eval.utils import get_keijzer_data
+    from tengp_eval.utils.function_sets import keijzer_fixed_funset
+
+    output_dir = sys.argv[1]
+    configs_dir = sys.argv[2]
+
+    random.seed(42)
+
+    np.warnings.filterwarnings('ignore')
+
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    start = time()
+
+    for bench_id in  range(11,16):
+        x_train, y_train, x_test, y_test = get_keijzer_data(random, bench_id)
+
+        cp = ConfigParser()
+        cp.read(os.path.join(configs_dir, f'hp-keijzer{bench_id}-pso.ini'))
+        cp['DEFAULT']['gens'] = str(10)
+
+        max_trials = 5
+
+        all_logs = []
+
+        for i in range(max_trials):
+            print(f'keijzer{bench_id}')
+            log = run_benchmark(cp, x_test, y_test, keijzer_fixed_funset)
+            all_logs.append(log)
+
+
+        with open(os.path.join(output_dir, f'keijzer{bench_id}.log'), 'wb') as f:
+            pickle.dump(all_logs, f)
+
+    print(f'finised, wall time: {time() - start}')
