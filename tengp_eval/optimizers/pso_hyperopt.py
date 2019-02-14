@@ -18,6 +18,9 @@ def cost_function_fc(cp, funset, x, y, fitness_fn):
         cp['OPTIMPARAMS']['omega'] = str(X[0][1])
         cp['OPTIMPARAMS']['eta1'] = str(X[0][2])
         cp['OPTIMPARAMS']['eta2'] = str(X[0][3])
+        cp['OPTIMPARAMS']['max_vel'] = str(X[0][4])
+        cp['OPTIMPARAMS']['variant'] = str(int(X[0][5] + 1))
+        cp['OPTIMPARAMS']['neighb_type'] = str(int(X[0][6] + 1))
         pg.set_global_rng_seed(seed = 42)
         log = run_benchmark(cp, x, y, funset)
         return fitness_fn(log)
@@ -32,8 +35,8 @@ def tune_hyperparameters(output_dir):
 
         cp = ConfigParser()
         cp['DEFAULT'] = {
-            'gens': '10',
-            'population_size': '10',
+            'gens': '500',
+            'population_size': '50',
             'n_nodes': '50',
             'max_back': '20'
         }
@@ -48,6 +51,9 @@ def tune_hyperparameters(output_dir):
             {'name': 'omega', 'type': 'continuous', 'domain': (0.01, 1)},
             {'name': 'eta1', 'type': 'continuous', 'domain': (0.01, 4)},
             {'name': 'eta2', 'type': 'continuous', 'domain': (0.01, 4)},
+            {'name': 'max_vel', 'type': 'continuous', 'domain': (0.01, 1)},
+            {'name': 'variant', 'type': 'categorical', 'domain': (0, 1, 2, 3, 4, 5), 'dimensionality': 1},
+            {'name': 'neighb_type', 'type': 'categorical', 'domain': (0, 1, 2, 3), 'dimensionality': 1},
         ]
 
         seed(42)
@@ -59,7 +65,7 @@ def tune_hyperparameters(output_dir):
                 domain=domain,
                 acquisition_jitter=0.1)
 
-        myBopt.run_optimization(max_iter=5)
+        myBopt.run_optimization(max_iter=30)
 
         best = myBopt.X[np.argmin(myBopt.Y)]
 
@@ -67,6 +73,9 @@ def tune_hyperparameters(output_dir):
         cp['OPTIMPARAMS']['omega'] = str(best[1])
         cp['OPTIMPARAMS']['eta1'] = str(best[2])
         cp['OPTIMPARAMS']['eta2'] = str(best[3])
+        cp['OPTIMPARAMS']['max_vel'] = str(best[4])
+        cp['OPTIMPARAMS']['variant'] = str(int(best[5] + 1))
+        cp['OPTIMPARAMS']['neighb_type'] = str(int(best[5] + 1))
         cp['DEFAULT']['gens'] = str(2000)
         cp['DEFAULT']['population_size'] = str(50)
 

@@ -64,6 +64,7 @@ def crossover(a, b):
 
     return GaIndividual(child_a), GaIndividual(child_b)
 
+
 class GaPredictors:
 
     def __init__(self, train_x, train_y, fraction, size):
@@ -104,12 +105,14 @@ class GaPredictors:
         """
         for predictor in self.population:
             total = 0
+            reduced_train_x, reduced_train_y = self.predictor_data(
+                    predictor.genes)
+
             for trainer in trainers_set.population:
-                reduced_train_x, reduced_train_y = self.predictor_data(
-                        predictor.genes)
                 f_predicted = trainers_set.fitness(trainer, reduced_train_x, reduced_train_y)
 
-                total += abs(trainer.fitness - f_predicted)
+                total += (abs(trainer.fitness - f_predicted)/trainer.fitness)*100
+
             predictor.fitness = total/len(trainers_set.population)
 
 
@@ -122,7 +125,7 @@ class GaPredictors:
 
             children = crossover(parent_a, parent_b)
             for child in children:
-                if random() > 0.9:
+                if random() > 0.8:
                     child = mutate(child, 0.1, self.gene_values)
                 new_population.append(child)
         self.population = new_population

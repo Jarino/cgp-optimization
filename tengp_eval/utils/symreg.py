@@ -219,7 +219,7 @@ def get_benchmark_keijzer(rand, n_degrees):
         train_y = target_keijzer3(train_x).transpose()
         test_x = np.array([[rand.random() * 2 - 1,
                              rand.random() + 1,
-                             rand.random() * 2 - 1] for i in range(1000)], ndmin=2)
+                             rand.random() * 2 - 1] for i in range(10000)], ndmin=2)
         test_y = target_keijzer3(test_x).transpose()
     elif n_degrees == 6:
         train_x = np.atleast_2d(np.arange(1, 50, 1)).transpose()

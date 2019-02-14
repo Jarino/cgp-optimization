@@ -7,6 +7,14 @@ import pygmo as pg
 from tengp.individual import IndividualBuilder, NPIndividual
 from tengp import Parameters, FunctionSet
 
+from tengp_eval.coevolution import TrainersSet, GaPredictors
+
+def fitness(individual, x, y):
+    output = individual.transform(x)
+    try:
+        return mean_squared_error(output, y)
+    except ValueError:
+        return 1000000000
 
 class cost_function:
     def __init__(self, X, Y, params, bounds):
@@ -14,6 +22,7 @@ class cost_function:
         self.bounds = bounds
         self.X = X
         self.Y = Y
+
 
     def fitness(self, x):
         individual = NPIndividual(list(x), self.bounds, self.params)
@@ -50,16 +59,59 @@ def run_benchmark(cp, x_train, y_train, funset):
             funset,
             cp.getint('CGPPARAMS', 'max_back'))
 
-    prob = pg.problem(cost_function(x_train, y_train, params, bounds))
+    # setup the coevolution elements
+    ts = TrainersSet(ib, 4, fitness, x_train, y_train)
+    predictors = GaPredictors(x_train, y_train, 100, 24)
+    predictors.evaluate_fitness(ts)
+    x_reduced, y_reduced = predictors.best_predictors_data()
+
+    GENS = 100
+
+    cf = cost_function(x_reduced, y_reduced, params, bounds)
+    prob = pg.problem(cf)
     algo = pg.algorithm(pg.pso(
-        gen=cp.getint('DEFAULT', 'gens'),
+        gen=GENS ,
         omega=cp.getfloat('OPTIMPARAMS', 'omega'),
         eta1=cp.getfloat('OPTIMPARAMS', 'eta1'),
-        eta2=cp.getfloat('OPTIMPARAMS', 'eta2')))
-    algo.set_verbosity(100)
-    pop = pg.population(prob, cp.getint('DEFAULT', 'population_size'))
-    pop = algo.evolve(pop)
+        eta2=cp.getfloat('OPTIMPARAMS', 'eta2'),
+        memory=True))
+    algo.set_verbosity(5)
+    pop = pg.population(prob, 50)
+    n_gens = GENS
+
+
+    while n_gens < 2000: #cp.getint('DEFAULT', 'gens'):
+
+        pop = algo.evolve(pop)
+
+        # calculate exact fitness of champion and
+        # add it to the trainers set
+        champion = NPIndividual(pop.champion_x, cf.bounds, cf.params)
+        try:
+            champion.fitness = fitness(champion, x_train, y_train)
+            ts.add_trainer(champion)
+        except ValueError:
+            print('unsuccessful adding of champion')
+
+        # update random population
+        ts.update_random_population()
+
+        predictors.predictors_evolution_step(ts)
+        print('changing the subset, best predictor: ', predictors.best_predictor.fitness)
+
+        x_reduced, y_reduced = predictors.best_predictors_data()
+        pop.problem.extract(object).X = x_reduced
+        pop.problem.extract(object).Y = y_reduced
+        n_gens += GENS
+
     uda = algo.extract(pg.pso)
+
+    champion = NPIndividual(pop.champion_x, cf.bounds, cf.params)
+    try:
+        champion.fitness = fitness(champion, x_train, y_train)
+        print('exact fitness of champion', champion.fitness)
+    except ValueError:
+        print('unsuccessful adding of champion')
 
     return [x[2] for x in uda.get_log()]
 
@@ -86,14 +138,13 @@ if __name__ == '__main__':
 
     start = time()
 
-    for bench_id in  range(11,16):
+    for bench_id in  range(11,12):
         x_train, y_train, x_test, y_test = get_keijzer_data(random, bench_id)
 
         cp = ConfigParser()
         cp.read(os.path.join(configs_dir, f'hp-keijzer{bench_id}-pso.ini'))
-        cp['DEFAULT']['gens'] = str(10)
 
-        max_trials = 5
+        max_trials = 1
 
         all_logs = []
 

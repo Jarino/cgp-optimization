@@ -6,3 +6,6 @@ pso_hyperopt:
 
 pso_eval:
 	python -m tengp_eval.optimizers.pso results/pso/ hyperparams/pso/
+
+pso_eval_coevol:
+	python -m tengp_eval.optimizers.pso_coevol results/pso/ hyperparams/pso/
