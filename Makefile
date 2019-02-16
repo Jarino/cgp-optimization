@@ -1,3 +1,5 @@
+baseline_eval:
+	python -m tengp_eval.optimizers.baseline results/baseline/ hyperparams/baseline/
 pso:
 	python ccgp_pso.py pso.ini test
 
