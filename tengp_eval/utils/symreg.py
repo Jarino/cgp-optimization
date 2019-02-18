@@ -252,35 +252,35 @@ def get_benchmark_keijzer(rand, n_degrees):
         train_x = np.array([[rand.random()*6 - 3,
                              rand.random()*6 - 3] for i in range(20)], ndmin=2)
         train_y = target_keijzer9(train_x).transpose()
-        xv, yv = np.meshgrid(np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01))
+        xv, yv = np.meshgrid(np.arange(-3, 3, 0.1), np.arange(-3, 3, 0.1))
         test_x = np.array([xv.flatten(), yv.flatten()]).T
         test_y = target_keijzer9(test_x).transpose()
     elif n_degrees == 12:
         train_x = np.array([[rand.random()*6 - 3,
                              rand.random()*6 - 3] for i in range(20)], ndmin=2)
         train_y = target_keijzer10(train_x).transpose()
-        xv, yv = np.meshgrid(np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01))
+        xv, yv = np.meshgrid(np.arange(-3, 3, 0.1), np.arange(-3, 3, 0.1))
         test_x = np.array([xv.flatten(), yv.flatten()]).T
         test_y = target_keijzer10(test_x).transpose()
     elif n_degrees == 13:
         train_x = np.array([[rand.random()*6 - 3,
                              rand.random()*6 - 3] for i in range(20)], ndmin=2)
         train_y = target_keijzer11(train_x).transpose()
-        xv, yv = np.meshgrid(np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01))
+        xv, yv = np.meshgrid(np.arange(-3, 3, 0.1), np.arange(-3, 3, 0.1))
         test_x = np.array([xv.flatten(), yv.flatten()]).T
         test_y = target_keijzer11(test_x).transpose()
     elif n_degrees == 14:
         train_x = np.array([[rand.random()*6 - 3,
                              rand.random()*6 - 3] for i in range(20)], ndmin=2)
         train_y = target_keijzer12(train_x).transpose()
-        xv, yv = np.meshgrid(np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01))
+        xv, yv = np.meshgrid(np.arange(-3, 3, 0.1), np.arange(-3, 3, 0.1))
         test_x = np.array([xv.flatten(), yv.flatten()]).T
         test_y = target_keijzer12(test_x).transpose()
     elif n_degrees == 15:
         train_x = np.array([[rand.random()*6 - 3,
                              rand.random()*6 - 3] for i in range(20)], ndmin=2)
         train_y = target_keijzer13(train_x).transpose()
-        xv, yv = np.meshgrid(np.arange(-3, 3, 0.01), np.arange(-3, 3, 0.01))
+        xv, yv = np.meshgrid(np.arange(-3, 3, 0.1), np.arange(-3, 3, 0.1))
         test_x = np.array([xv.flatten(), yv.flatten()]).T
         test_y = target_keijzer13(test_x).transpose()
     else:
