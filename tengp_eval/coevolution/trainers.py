@@ -35,6 +35,7 @@ class TrainersSet:
             self.best_pop.append(trainer)
 
     def update_random_population(self):
+        return
         self.random_pop.pop(0)
         # prevent creation of trainers with invalid fitness
         fitness = float('inf')
@@ -46,6 +47,6 @@ class TrainersSet:
 
     @property
     def population(self):
-        return self.best_pop + self.random_pop
+        return self.best_pop #+ self.random_pop
 
 

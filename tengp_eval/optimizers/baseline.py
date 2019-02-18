@@ -39,14 +39,14 @@ if __name__ == '__main__':
 
     start = time()
 
-    for bench_id in  range(1,16):
+    for bench_id in  range(10,16):
         x_train, y_train, x_test, y_test = get_keijzer_data(random, bench_id)
 
 
         cp = ConfigParser()
         cp.read(os.path.join(configs_dir, f'baseline.ini'))
 
-        max_trials = 1
+        max_trials = 50
 
         ib, params, bounds = define_cgp_system(
                 cp.getint('DEFAULT', 'n_nodes'),
