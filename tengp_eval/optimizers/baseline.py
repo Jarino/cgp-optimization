@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     start = time()
 
-    for bench_id in  range(1,16):
+    for bench_id in  range(10,16):
         x_train, y_train, x_test, y_test = get_keijzer_data(random, bench_id)
 
 
