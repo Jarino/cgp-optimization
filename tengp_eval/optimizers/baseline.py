@@ -46,7 +46,7 @@ if __name__ == '__main__':
         cp = ConfigParser()
         cp.read(os.path.join(configs_dir, f'baseline.ini'))
 
-        max_trials = 1
+        max_trials = 50
 
         ib, params, bounds = define_cgp_system(
                 cp.getint('DEFAULT', 'n_nodes'),
